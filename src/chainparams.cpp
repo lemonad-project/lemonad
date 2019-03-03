@@ -59,7 +59,7 @@ static Checkpoints::MapCheckpoints mapCheckpoints =
     (0, uint256("0x0000004caed20a5cc4433b50353423288a4a4bc63061dab71f3e4ead985133b7")); //Genesis block
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1550313020, // * UNIX timestamp of last checkpoint block
+    1551618441, // * UNIX timestamp of last checkpoint block
     0,    // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
     10        // * estimated number of transactions per day after checkpoint
@@ -69,7 +69,7 @@ static Checkpoints::MapCheckpoints mapCheckpointsTestnet =
     boost::assign::map_list_of(0, uint256("0x000000deaf32ef41f5a183df291a747dffc95b7353269f55c4a0af995b455d60"));
 static const Checkpoints::CCheckpointData dataTestnet = {
     &mapCheckpointsTestnet,
-    1550086371,
+    1551618428,
     0,
     5};
 
@@ -77,7 +77,7 @@ static Checkpoints::MapCheckpoints mapCheckpointsRegtest =
     boost::assign::map_list_of(0, uint256("0x001"));
 static const Checkpoints::CCheckpointData dataRegtest = {
     &mapCheckpointsRegtest,
-    1549959462,
+    1551618428,
     0,
     5};
 
@@ -130,7 +130,7 @@ public:
         genesis.nVersion = 1;
         genesis.nBits = 0x1e0ffff0;
         
-        genesis.nTime = 1550313020;
+        genesis.nTime = 1551618441;
         genesis.nNonce = 891216;
        
         hashGenesisBlock = genesis.GetHash();
@@ -230,7 +230,7 @@ public:
         nMaxMoneyOut = 21000000 * COIN;
 
         //! Modify the testnet genesis block so the timestamp is valid for a later start.
-        genesis.nTime = 1550086371;
+        genesis.nTime = 1551618428;
         genesis.nNonce = 4898517;
 
         hashGenesisBlock = genesis.GetHash();
@@ -325,7 +325,7 @@ public:
         nTargetTimespan = 24 * 60 * 60; // Lemonad: 1 day
         nTargetSpacing = 1 * 60;        // Lemonad: 1 minutes
         bnProofOfWorkLimit = ~uint256(0) >> 1;
-        genesis.nTime = 1549959462;
+        genesis.nTime = 1551618428;
         genesis.nBits = 0x207fffff;
         genesis.nNonce = 0;
 
