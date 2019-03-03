@@ -468,16 +468,15 @@ void BitcoinMiner(CWallet* pwallet, bool fProofOfStake)
 
     while (fGenerateBitcoins || fProofOfStake) {
         if (fProofOfStake) {
-            LogPrintf("POS-HERE");
             if (chainActive.Tip()->nHeight < Params().LAST_POW_BLOCK()) {
                 MilliSleep(5000);
                 continue;
             }
-            LogPrintf("vnodes = %d, isLocked = %d, mintablecoins = %d, nreserve = %s, balance = %s, mnsync = %s\n", 
-                    vNodes.size(), pwallet->IsLocked(), fMintableCoins, FormatMoney(nReserveBalance), FormatMoney(pwallet->GetBalance()), masternodeSync.IsSynced());
 
             while (chainActive.Tip()->nTime < 1471482000 || vNodes.size() < 3 || pwallet->IsLocked() || !fMintableCoins || nReserveBalance >= pwallet->GetBalance() || !masternodeSync.IsSynced()) {
                 LogPrintf("ThreadStakeMinter() exception \n");
+                LogPrintf("vnodes = %d, isLocked = %d, mintablecoins = %d, nreserve = %s, balance = %s, mnsync = %s\n", 
+                    vNodes.size(), pwallet->IsLocked(), fMintableCoins, FormatMoney(nReserveBalance), FormatMoney(pwallet->GetBalance()), masternodeSync.IsSynced());
                 nLastCoinStakeSearchInterval = 0;
                 MilliSleep(5000);
                 if (!fGenerateBitcoins && !fProofOfStake)
