@@ -2,8 +2,8 @@ LemonAd Project
 =====================================
 
 LemonAd is an advertising platform that allows publishers registered through Lemonad.io to serve automatic text,
- image, video, or interactive media advertisements, that are targeted to website content and audience. It consists in
-3 stages development, culminating with the release of a hardware device that will allow ride sharing services drivers to monetize their time.
+ image, video, or interactive media advertisements, that are targeted to website content and audience. It consists of
+3 stages development, culminating with the release of a hardware device that will allow ride sharing service drivers to monetize their time.
 
 The Ad campaign budget planning, publisher's payment and hardware device merchandising will be done only by using the LemonAd issued cryptocurrency: LAD.
 
