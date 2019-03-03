@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Lemonad
+Comment=Lemonad P2P Cryptocurrency
+Comment[fr]=Lemonad, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Lemonad, eşten eşe kriptografik sanal para birimi
+Exec=lemonad-qt %u
+Terminal=false
+Type=Application
+Icon=lemonad128
+MimeType=x-scheme-handler/lemonad;
+Categories=Office;Finance;

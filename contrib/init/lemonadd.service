@@ -1,0 +1,26 @@
+[Unit]
+Description=LemonAd's distributed currency daemon
+After=network.target
+
+[Service]
+User=lemonad
+Group=lemonad
+
+Type=forking
+PIDFile=/var/lib/lemonadd/lemonadd.pid
+
+ExecStart=/usr/bin/lemonadd -daemon -pid=/var/lib/lemonadd/lemonadd.pid \
+          -conf=/etc/lemonad/lemonad.conf -datadir=/var/lib/lemonadd
+
+ExecStop=-/usr/bin/lemonad-cli -conf=/etc/lemonad/lemonad.conf \
+         -datadir=/var/lib/lemonadd stop
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target

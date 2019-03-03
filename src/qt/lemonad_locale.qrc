@@ -1,0 +1,28 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/translations">
+        <file alias="bg">locale/lemonad_bg.qm</file>
+        <file alias="ca">locale/lemonad_ca.qm</file>
+        <file alias="cs">locale/lemonad_cs.qm</file>
+        <file alias="da">locale/lemonad_da.qm</file>
+        <file alias="de">locale/lemonad_de.qm</file>
+        <file alias="en">locale/lemonad_en.qm</file>
+        <file alias="en_US">locale/lemonad_en_US.qm</file>
+        <file alias="es">locale/lemonad_es.qm</file>
+        <file alias="fi">locale/lemonad_fi.qm</file>
+        <file alias="fr_FR">locale/lemonad_fr_FR.qm</file>
+        <file alias="it">locale/lemonad_it.qm</file>
+        <file alias="ja">locale/lemonad_ja.qm</file>
+        <file alias="ko_KR">locale/lemonad_ko_KR.qm</file>
+        <file alias="nl">locale/lemonad_nl.qm</file>
+        <file alias="pl">locale/lemonad_pl.qm</file>
+        <file alias="pt">locale/lemonad_pt.qm</file>
+        <file alias="pt_BR">locale/lemonad_pt_BR.qm</file>
+        <file alias="ro_RO">locale/lemonad_ro_RO.qm</file>
+        <file alias="ru">locale/lemonad_ru.qm</file>
+        <file alias="sk">locale/lemonad_sk.qm</file>
+        <file alias="sv">locale/lemonad_sv.qm</file>
+        <file alias="uk">locale/lemonad_uk.qm</file>
+        <file alias="zh_CN">locale/lemonad_zh_CN.qm</file>
+        <file alias="zh_TW">locale/lemonad_zh_TW.qm</file>
+    </qresource>
+</RCC>
