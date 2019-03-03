@@ -254,7 +254,7 @@ function important_information() {
 function setup_node() {
   get_ip
   create_config
-  sync_node
+  #sync_node
   create_key
   update_config
   enable_firewall
