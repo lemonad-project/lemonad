@@ -331,7 +331,7 @@ border:1px solid #dddddd;
 }
 
 QTableView::item { /* Table Item */
-background-color:#fcfcfc;
+background-color:#777777;
 font-size:12px;
 }
 
@@ -735,11 +735,11 @@ min-width:180px;
 }
 
 QDialog#RPCConsole QWidget#tab_peers QLabel#peerHeading { /* Peers Info Header */
-color:#ddd;
+color:black;
 }
 
 QDialog#RPCConsole QTableView#peerWidget::item { /* Peers Table Items */
-color:#dddddd;
+color:black;
 }
 
 QDialog#RPCConsole QPushButton#openDebugLogfileButton {
@@ -748,8 +748,8 @@ max-width:60px;
 
 QDialog#RPCConsole QTextEdit#messagesWidget { /* Console Messages Window */
 border:0;
-background-color:#fcfcfc;
-color:#dddddd;
+background-color:#323137;
+color:white;
 }
 
 QDialog#RPCConsole QLineEdit#lineEdit { /* Console Input */
@@ -1158,6 +1158,7 @@ font-size:12px;
 max-width:369px;
 margin-top:12px;
 margin-left:0px; /* CSS Voodoo - set to -66px to hide default transaction icons */
+color: #fdee1a;
 }
 
 /**************************** SEND DIALOG ***********************************************/
