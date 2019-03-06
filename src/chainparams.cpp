@@ -114,7 +114,7 @@ public:
         nModifierUpdateBlock = 615800;
         nMaxMoneyOut = 21000000 * COIN;
         nMinStakeReserve = 1;
-        nStakeInputMinimal = 10 * COIN;
+        nStakeInputMinimal = 0.09 * COIN;
 
 
 	const char* pszTimestamp = "This is a message from the future: LemonAd will become a great Ad platform";
