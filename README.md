@@ -19,7 +19,7 @@ More information at [https://www.lemonad.io](https://www.lemonad.io)
 <tr><td>Masternode Collateral</td><td>Variable, starting from 1000 LAD</td></tr>
 <tr><td>Premine</td><td>2%: 420 000 LAD</td></tr>
 <tr><td>Stake Maturity Age</td><td>1 Hour</td></tr>
-<tr><td>Min Stake input</td><td>10</td></tr>
+<tr><td>Min Stake input</td><td>0.09</td></tr>
  <tr><td>P2P Port:</td><td>52271</td></tr>
  <tr><td>RPC Port:</td><td>52273</td></tr>
 </table>
