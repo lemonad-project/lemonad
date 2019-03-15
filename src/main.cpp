@@ -89,7 +89,6 @@ struct COrphanTx {
 map<uint256, COrphanTx> mapOrphanTransactions;
 map<uint256, set<uint256> > mapOrphanTransactionsByPrev;
 map<uint256, int64_t> mapRejectedBlocks;
-map<COutPoint, int> mapStakeSpent;
 
 
 void EraseOrphansFor(NodeId peer);
@@ -2080,7 +2079,6 @@ bool DisconnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex
                 if (coins->vout.size() < out.n + 1)
                     coins->vout.resize(out.n + 1);
                 coins->vout[out.n] = undo.txout;
-                mapStakeSpent.erase(out);
             }
         }
     }
@@ -2319,25 +2317,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
             return state.Abort("Failed to write transaction index");
     
     
-    for (const CTransaction tx: block.vtx) {
-        if (tx.IsCoinBase())
-            continue;
-        for (const CTxIn in: tx.vin) {
-            LogPrint("map", "mapStakeSpent: Insert %s | %u\n", in.prevout.ToString(), pindex->nHeight);
-            mapStakeSpent.insert(std::make_pair(in.prevout, pindex->nHeight));
-        }
-    }
-
-
-    for (auto it = mapStakeSpent.begin(); it != mapStakeSpent.end();) {
-        if (it->second < pindex->nHeight - Params().MaxReorganizationDepth()) {
-            LogPrint("map", "mapStakeSpent: Erase %s | %u\n", it->first.ToString(), it->second);
-            it = mapStakeSpent.erase(it);
-        }
-        else {
-            it++;
-        }
-    }
+    
 
     // add this block to the view's block chain
     view.SetBestBlock(pindex->GetBlockHash());
@@ -3208,35 +3188,6 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
             if (block.vtx[i].IsCoinStake())
                 return state.DoS(100, error("CheckBlock() : more than one coinstake"));
         
-        //PoS attack check
-
-        // Check for coin age.
-        // First try finding the previous transaction in database.
-        CTransaction txPrev;
-        uint256 hashBlockPrev;
-        if (!GetTransaction(block.vtx[1].vin[0].prevout.hash, txPrev, hashBlockPrev, true))
-                return state.DoS(100, error("CheckBlock() : stake failed to find vin transaction"));
-        // Find block in map.
-        CBlockIndex* pindex = NULL;
-        BlockMap::iterator it = mapBlockIndex.find(hashBlockPrev);
-        if (it != mapBlockIndex.end())
-                pindex = it->second;
-        else
-                return state.DoS(100, error("CheckBlock() :  stake failed to find block index"));
-        
-        
-        if (txPrev.vout[block.vtx[1].vin[0].prevout.n].nValue < Params().StakeInputMinimal())
-                return state.DoS(100, error("CheckBlock() : stake input below minimum value"));
-        
-        // Check block time vs stake age requirement.
-        if (pindex->GetBlockHeader().nTime + nStakeMinAge > GetAdjustedTime())
-                return state.DoS(100, error("CheckBlock() : stake under min. stake age"));
-        
-
-        // Check that the prev. stake block has required confirmations by height.
-        LogPrintf("CheckBlock() : height=%d stake_tx_height=%d required_confirmations=%d got=%d\n", chainActive.Tip()->nHeight, pindex->nHeight, Params().COINBASE_MATURITY(), chainActive.Tip()->nHeight - pindex->nHeight);
-        if (chainActive.Tip()->nHeight - pindex->nHeight < Params().COINBASE_MATURITY())
-                return state.DoS(100, error("CheckBlock() : stake under min. required confirmations"));
         
     }
 
@@ -3505,54 +3456,6 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
 
     int nHeight = pindex->nHeight;
 
-    if (block.IsProofOfStake()) {
-        LOCK(cs_main);
-
-         CCoinsViewCache coins(pcoinsTip);
-
-         if (!coins.HaveInputs(block.vtx[1])) {
-            // the inputs are spent at the chain tip so we should look at the recently spent outputs
-
-             for (CTxIn in : block.vtx[1].vin) {
-                auto it = mapStakeSpent.find(in.prevout);
-                if (it == mapStakeSpent.end()) {
-                    return false;
-                }
-                if (it->second <= pindexPrev->nHeight) {
-                    return false;
-                }
-            }
-        }
-
-         // if this is on a fork
-        if (!chainActive.Contains(pindexPrev) && pindexPrev != NULL) {
-            // start at the block we're adding on to
-            CBlockIndex *last = pindexPrev;
-
-             // while that block is not on the main chain
-            while (!chainActive.Contains(last) && pindexPrev != NULL) {
-                CBlock bl;
-                ReadBlockFromDisk(bl, last);
-                // loop through every spent input from said block
-                for (CTransaction t : bl.vtx) {
-                    for (CTxIn in: t.vin) {
-                        // loop through every spent input in the staking transaction of the new block
-                        for (CTxIn stakeIn : block.vtx[1].vin) {
-                            // if they spend the same input
-                            if (stakeIn.prevout == in.prevout) {
-                                // reject the block
-                                return false;
-                            }
-                        }
-                    }
-                }
-
-
-                 // go to the parent block
-                last = pindexPrev->pprev;
-            }
-        }
-    }
         
     // Write block to history file
     try {
