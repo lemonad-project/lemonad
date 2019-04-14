@@ -165,7 +165,7 @@ public:
         strObfuscationPoolDummyAddress = "LXdAq6yiAAHGZvLLHrazx1fV2zsxYAC4Gw";
         nStartMasternodePayments = 1550086291; //Genesis time
         
-        strDevAddress = "LZDag61vWGn5v8d981PYdowzmWEdZCGGAs";
+        strDevAddress = "LRi27eCZGAuSvjJzAv9938m9e6JCgbux6B";
     }
 
     const Checkpoints::CCheckpointData& Checkpoints() const
