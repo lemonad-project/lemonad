@@ -2270,9 +2270,19 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     LogPrint("bench", "      - Connect %u transactions: %.2fms (%.3fms/tx, %.3fms/txin) [%.2fs]\n", (unsigned)block.vtx.size(), 0.001 * (nTime1 - nTimeStart), 0.001 * (nTime1 - nTimeStart) / block.vtx.size(), nInputs <= 1 ? 0 : 0.001 * (nTime1 - nTimeStart) / (nInputs - 1), nTimeConnect * 0.000001);
 
     //PoW phase redistributed fees to miner. PoS stage destroys fees.
+    
     CAmount bValue = GetBlockValue(pindex->pprev->nHeight);
-    CAmount nExpectedMint = bValue + 
-    GetDevFee(pindex->pprev->nHeight, bValue);
+    
+    //First problem block: 70644
+    //Allow it 2 days from now until block 85680
+    if (pindex->pprev->nHeight < 85680) {
+        CAmount nExpectedMint = bValue + 
+        GetMasternodePayment(pindex->pprev->nHeight, bValue, 0) +
+        GetDevFee(pindex->pprev->nHeight, bValue);
+    } else {
+        CAmount nExpectedMint = bValue + 
+        GetDevFee(pindex->pprev->nHeight, bValue);
+    }
     
     if (block.IsProofOfWork())
         nExpectedMint += nFees;
