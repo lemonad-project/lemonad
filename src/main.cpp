@@ -2278,11 +2278,11 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     //First problem block: 70644
     //Allow it 2 days from now until block 85680
     if (pindex->pprev->nHeight < 85680) {
-        CAmount nExpectedMint = bValue + 
+        nExpectedMint = bValue + 
         GetMasternodePayment(pindex->pprev->nHeight, bValue, 0) +
         GetDevFee(pindex->pprev->nHeight, bValue);
     } else {
-        CAmount nExpectedMint = bValue + 
+        nExpectedMint = bValue + 
         GetDevFee(pindex->pprev->nHeight, bValue);
     }
     
